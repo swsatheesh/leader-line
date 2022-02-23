@@ -17,15 +17,20 @@ function drawLineBetweenTwoObjects(circle, text) {
   const firstPoint = `M ${circle_cx} ${circle_cy}`;
   let LastPoint = `L ${text_x} ${text_y}`;
   let middlePoint = '';
-console.log(typeof text_x);
+
   switch (true) {
-    case (circle_cx - circle_r - 20) > (text_x + tBound.width):
+    case text_x > circle_cx:
+      middlePoint = `L ${circle_cx} ${text_y}`;
+      LastPoint = `L ${text_x} ${text_y}`;
+      break;
+    case (circle_cx - circle_r) > (text_x + tBound.width):
       middlePoint = `L ${circle_cx} ${text_y}`;
       LastPoint = `L ${text_x + tBound.width} ${text_y}`;
       break;
-    case (circle_cx - circle_r - 20) < (text_x + tBound.width):
+    case (circle_cx - circle_r) < (text_x + tBound.width):
+      const adjustedY = text_y > circle_cy ? text_y - 5 : text_y + 5;
       middlePoint = `L ${text_x + (tBound.width) / 2} ${circle_cy}`;
-      LastPoint = `L ${text_x + (tBound.width) / 2} ${text_y + 5}`;
+      LastPoint = `L ${text_x + tBound.width / 2} ${adjustedY}`;
       break;
     default:
       break;
